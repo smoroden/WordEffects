@@ -15,6 +15,8 @@ void canadianize(NSString *inputString);
 void respond(NSString *inputString);
 void despace(NSString *inputString);
 void removePunctuation(NSString *inputString);
+void wordCount(NSString *inputString);
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -33,6 +35,7 @@ int main(int argc, const char * argv[]) {
             printf("5: Respond\n");
             printf("6: De-Space-It\n");
             printf("7: Un-Punctuate\n");
+            printf("8: Word Count\n");
             printf("9: Quit\n");
 
             fgets(command, 255, stdin);
@@ -71,16 +74,20 @@ int main(int argc, const char * argv[]) {
                 case '7':
                     removePunctuation(inputString);
                     break;
+                case '8':
+                    wordCount(inputString);
+                    break;
                 default:
                     printf("Invalid command.\n");
                     break;
             }
-            
         }
-        
-        
     }
     return 0;
+}
+
+void wordCount(NSString *inputString) {
+    NSLog(@"The number of words is: %lu", (unsigned long)[inputString componentsSeparatedByString:@" "].count);
 }
 
 void removePunctuation(NSString *inputString) {
