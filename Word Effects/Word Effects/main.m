@@ -17,6 +17,15 @@ void despace(NSString *inputString);
 void removePunctuation(NSString *inputString);
 void wordCount(NSString *inputString);
 
+void wordCountMutable(NSMutableString *inputString);
+void makeLouderMutable(NSMutableString *inputString);
+void makeQuieterMutable(NSMutableString *inputString);
+void numberizeMutable(NSMutableString *inputString);
+void canadianizeMutable(NSMutableString *inputString);
+void respondMutable(NSMutableString *inputString);
+void despaceMutable(NSMutableString *inputString);
+void removePunctuationMuteable(NSMutableString *inputString);
+
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -50,14 +59,17 @@ int main(int argc, const char * argv[]) {
             fgets(inputChars, 255, stdin);
             
             NSString *inputString = [NSString stringWithUTF8String:inputChars];
+            NSMutableString *mutableString = [inputString mutableCopy];
 
             
             switch (command[0]) {
                 case '1':
                     makeLouder(inputString);
+                    makeLouderMutable(mutableString);
                     break;
                 case '2':
                     makeQuieter(inputString);
+                    makeQuieterMutable(mutableString);
                     break;
                 case '3':
                     numberize([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
@@ -140,5 +152,16 @@ void makeQuieter(NSString *inputString) {
 void makeLouder(NSString *inputString) {
     
     NSLog(@"Made Louder!: %@\n", [inputString uppercaseString]);
+    
+}
+
+void makeLouderMutable(NSMutableString *inputString) {
+    
+    NSLog(@"Made Louder (Mutable)!: %@\n", [inputString uppercaseString]);
+    
+}
+
+void makeQuieterMutable(NSMutableString *inputString) {
+    NSLog(@"Made Quieter! (Mutable): %@\n", [inputString lowercaseString]);
     
 }
