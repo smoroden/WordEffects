@@ -14,6 +14,7 @@ void numberize(NSString *inputString);
 void canadianize(NSString *inputString);
 void respond(NSString *inputString);
 void despace(NSString *inputString);
+void removePunctuation(NSString *inputString);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -23,7 +24,7 @@ int main(int argc, const char * argv[]) {
         BOOL quit = NO;
         
         while (!quit) {
-            printf("Welcome to Word Effects!\n");
+            printf("\nWelcome to Word Effects!\n");
             printf("Please enter the number of the following command you would like to run:\n");
             printf("1: MAKE LOUDER\n");
             printf("2: make quieter\n");
@@ -31,6 +32,7 @@ int main(int argc, const char * argv[]) {
             printf("4: Canadianize\n");
             printf("5: Respond\n");
             printf("6: De-Space-It\n");
+            printf("7: Un-Punctuate\n");
             printf("9: Quit\n");
 
             fgets(command, 255, stdin);
@@ -66,6 +68,9 @@ int main(int argc, const char * argv[]) {
                 case '6':
                     despace(inputString);
                     break;
+                case '7':
+                    removePunctuation(inputString);
+                    break;
                 default:
                     printf("Invalid command.\n");
                     break;
@@ -76,6 +81,12 @@ int main(int argc, const char * argv[]) {
         
     }
     return 0;
+}
+
+void removePunctuation(NSString *inputString) {
+    
+    NSString *finalString = [[inputString componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
+    NSLog(@"No more punctuation:\n%@", finalString);
 }
 
 void despace(NSString *inputString) {
