@@ -11,6 +11,9 @@
 void makeLouder(NSString *inputString);
 void makeQuieter(NSString *inputString);
 void numberize(NSString *inputString);
+void canadianize(NSString *inputString);
+void respond(NSString *inputString);
+void despace(NSString *inputString);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -54,7 +57,17 @@ int main(int argc, const char * argv[]) {
                 case '3':
                     numberize([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
                     break;
+                case '4':
+                    canadianize([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
+                    break;
+                case '5':
+                    respond([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
+                    break;
+                case '6':
+                    despace(inputString);
+                    break;
                 default:
+                    printf("Invalid command.\n");
                     break;
             }
             
@@ -65,13 +78,35 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-void numberize(NSString *inputString) {
+void despace(NSString *inputString) {
+    NSLog(@"All of the spaces have been changed:\n%@", [inputString stringByReplacingOccurrencesOfString:@" " withString:@"-"]);
+}
+
+void respond(NSString *inputString) {
+    char lastChar = [inputString characterAtIndex:inputString.length - 1];
+    if ( lastChar == '?') {
+        NSLog(@"I don't know.");
+    } else if (lastChar == '!') {
+        NSLog(@"Woah, calm down!");
+    }
+}
+
+void canadianize(NSString *inputString) {
+    NSString *eh = @", eh?";
     
+    NSLog(@"Canadianized string: %@", [inputString stringByAppendingString:eh]);
+    
+}
+
+void numberize(NSString *inputString) {
+    // We use the formatter to convert the string to a number
     NSNumberFormatter *format = [[NSNumberFormatter alloc] init];
     format.numberStyle = NSNumberFormatterDecimalStyle;
     
+    // Getting the actual number
     NSNumber *number = [format numberFromString:inputString];
     
+    // If the number is nil the conversion didn't work
     if (number != nil) {
         NSLog(@"The number entered is: %@\n", number);
     } else {
