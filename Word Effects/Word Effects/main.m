@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+// Standard NSSTRING
 void makeLouder(NSString *inputString);
 void makeQuieter(NSString *inputString);
 void numberize(NSString *inputString);
@@ -17,6 +17,7 @@ void despace(NSString *inputString);
 void removePunctuation(NSString *inputString);
 void wordCount(NSString *inputString);
 
+// MUTABLE: Haven't actually implememnted all of them.
 void wordCountMutable(NSMutableString *inputString);
 void makeLouderMutable(NSMutableString *inputString);
 void makeQuieterMutable(NSMutableString *inputString);
@@ -29,12 +30,14 @@ void removePunctuationMuteable(NSMutableString *inputString);
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
+
         char inputChars[255];
         char command[255];
         BOOL quit = NO;
         
+        // Loop until the user decides to quit
         while (!quit) {
+            // The welcome message and list of availible commands.
             printf("\nWelcome to Word Effects!\n");
             printf("Please enter the number of the following command you would like to run:\n");
             printf("1: MAKE LOUDER\n");
@@ -47,21 +50,25 @@ int main(int argc, const char * argv[]) {
             printf("8: Word Count\n");
             printf("9: Quit\n");
 
+            // We really only need two bytes but not a big deal.
             fgets(command, 255, stdin);
             
+            // Quickly check to see if they wish to quit.
             if (command[0] == '9') {
                 quit = YES;
                 continue;
             }
             
+            // Get the string to modify
             printf("Please enter a string:\n");
-            
             fgets(inputChars, 255, stdin);
             
+            // Convert C style string to Obj-C
             NSString *inputString = [NSString stringWithUTF8String:inputChars];
             NSMutableString *mutableString = [inputString mutableCopy];
 
             
+            // Do what needs to be done
             switch (command[0]) {
                 case '1':
                     makeLouder(inputString);
@@ -72,12 +79,15 @@ int main(int argc, const char * argv[]) {
                     makeQuieterMutable(mutableString);
                     break;
                 case '3':
+                    // The newline that fgets includes trips up the conversion so we get rid of it
                     numberize([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
                     break;
                 case '4':
+                    // Again we don't want a newline
                     canadianize([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
                     break;
                 case '5':
+                    // Once more the newline must go!
                     respond([inputString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]);
                     break;
                 case '6':
@@ -98,20 +108,24 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
+// Counts the number of words seperated by ' ' (spaces)
 void wordCount(NSString *inputString) {
     NSLog(@"The number of words is: %lu", (unsigned long)[inputString componentsSeparatedByString:@" "].count);
 }
 
+// Keeps only characters
 void removePunctuation(NSString *inputString) {
     
     NSString *finalString = [[inputString componentsSeparatedByCharactersInSet:[[NSCharacterSet letterCharacterSet] invertedSet]] componentsJoinedByString:@""];
     NSLog(@"No more punctuation:\n%@", finalString);
 }
 
+// replaces ' ' with '-'
 void despace(NSString *inputString) {
     NSLog(@"All of the spaces have been changed:\n%@", [inputString stringByReplacingOccurrencesOfString:@" " withString:@"-"]);
 }
 
+// gets the last character in the string and if it matches respond properly
 void respond(NSString *inputString) {
     char lastChar = [inputString characterAtIndex:inputString.length - 1];
     if ( lastChar == '?') {
@@ -121,6 +135,7 @@ void respond(NSString *inputString) {
     }
 }
 
+// makes it canadian, eh?
 void canadianize(NSString *inputString) {
     NSString *eh = @", eh?";
     
@@ -128,6 +143,7 @@ void canadianize(NSString *inputString) {
     
 }
 
+// converts the string to a number if valid
 void numberize(NSString *inputString) {
     // We use the formatter to convert the string to a number
     NSNumberFormatter *format = [[NSNumberFormatter alloc] init];
