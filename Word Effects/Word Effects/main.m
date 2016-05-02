@@ -69,6 +69,8 @@ int main(int argc, const char * argv[]) {
 
             
             // Do what needs to be done
+            // The problem with this way of doing it is that we are limited to 10 options
+            // Could change it to if-else statements or convert it to integers.
             switch (command[0]) {
                 case '1':
                     makeLouder(inputString);
