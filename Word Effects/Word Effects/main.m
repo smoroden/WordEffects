@@ -154,6 +154,9 @@ void numberize(NSString *inputString) {
     // Getting the actual number
     NSNumber *number = [format numberFromString:inputString];
     
+    // The other way of doing it would be [inputString intValue]
+    // but the formatter can be more customizable.
+    
     // If the number is nil the conversion didn't work
     if (number != nil) {
         NSLog(@"The number entered is: %@\n", number);
@@ -174,12 +177,17 @@ void makeLouder(NSString *inputString) {
 }
 
 void makeLouderMutable(NSMutableString *inputString) {
+    // To demonstrate that it is mutable we change it in place
     
-    NSLog(@"Made Louder (Mutable)!: %@\n", [inputString uppercaseString]);
+    NSLog(@"Made Louder (Mutable)!: %@\n", inputString);
     
 }
 
 void makeQuieterMutable(NSMutableString *inputString) {
-    NSLog(@"Made Quieter! (Mutable): %@\n", [inputString lowercaseString]);
+    // To demonstrate that it is mutable we change it in place
+    [inputString lowercaseString];
+    NSLog(@"Made Quieter! (Mutable): %@\n", inputString);
     
 }
+
+
